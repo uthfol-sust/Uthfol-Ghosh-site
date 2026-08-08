@@ -6,8 +6,8 @@ import { skillGroups } from "@/data/portfolio";
 
 export default function Skills() {
   return (
-    <section id="skills" className="px-6 py-20 sm:px-8 lg:px-10 lg:py-28">
-      <div className="mx-auto max-w-7xl">
+    <section id="skills" className="mt-0 pt-0">
+      <div className="mx-auto max-w-7xl pt-0">
         <SectionTitle
           eyebrow="Skills"
           title="Engineering depth across backend systems, frontend polish, and applied AI."
@@ -69,13 +69,17 @@ function SectionTitle({
 }) {
   return (
     <div className="max-w-3xl">
-      <div className="inline-flex items-center gap-2 rounded-full border border-white/10 bg-white/5 px-4 py-2 text-xs font-medium uppercase tracking-[0.3em] text-cyan-200/70">
+      <div className="inline-flex items-center gap-2 rounded-full border border-white/10 bg-white/5 px-4 py-2 text-xl font-semibold uppercase tracking-[0.2em] text-cyan-200/70">
+        <span className="flex h-1.5 w-1.5 items-center justify-center">
+          <span className="h-2 w-2 rounded-full bg-cyan-300" />
+          <span className="absolute h-3 w-3 animate-ping rounded-full bg-cyan-300/30" />
+        </span>
         {eyebrow}
       </div>
-      <h2 className="mt-5 text-3xl font-semibold tracking-[-0.04em] text-white sm:text-4xl lg:text-5xl">
+      {/* <h2 className="mt-5 text-3xl font-semibold tracking-[-0.04em] text-white sm:text-4xl lg:text-5xl">
         {title}
       </h2>
-      <p className="mt-4 text-base leading-8 text-zinc-300 sm:text-lg">{description}</p>
+      <p className="mt-4 text-base leading-8 text-zinc-300 sm:text-lg">{description}</p> */}
     </div>
   );
 }

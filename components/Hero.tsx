@@ -116,10 +116,10 @@ export default function Hero() {
   return (
     <section
       id="home"
-      className="relative overflow-hidden px-6 pb-2 pt-8 sm:px-8 sm:pb-2 sm:pt-10 lg:px-10 lg:pb-2 lg:pt-12"
+      className="relative overflow-hidden px-6 pb-2 pt-3 sm:px-8 sm:pb-2 sm:pt-8 lg:px-10 lg:pb-2 lg:pt-3"
       aria-labelledby="hero-heading"
     >
-      <div className="mx-auto grid w-full max-w-7xl items-center gap-14 lg:grid-cols-[1.15fr_0.85fr] lg:gap-12">
+      <div className="mx-auto grid w-full max-w-7xl items-center gap-10 lg:grid-cols-[1.15fr_0.85fr] lg:gap-8">
         <motion.div
           initial={{ opacity: 0, y: 24 }}
           animate={{ opacity: 1, y: 0 }}
@@ -131,12 +131,12 @@ export default function Hero() {
             className="max-w-4xl text-5xl font-semibold tracking-tighter text-white sm:text-6xl lg:text-7xl"
           >
             {portfolio.name}
-            <span className="mt-4 block text-5xl bg-linear-to-r from-cyan-300 via-sky-200 to-fuchsia-300 bg-clip-text text-transparent">
+            <span className="mt-10 block text-5xl bg-clip-text text-transparent [background-size:220%_220%] [animation:gradient-shift_7s_ease-in-out_infinite] bg-[linear-gradient(90deg,_#8b5cf6_0%,_#d946ef_50%,_#d946ef_100%)] bg-[linear-gradient(90deg,_#8b5cf6_0%,_#c026d3_50%)]">
               {portfolio.role}
             </span>
           </h1>
 
-          <div className="mt-7 flex min-h-10 items-center gap-3 text-base text-zinc-300 sm:text-lg">
+          <div className="mt-3 flex min-h-10 items-center gap-3 text-base text-zinc-300 sm:text-lg">
             <PlayCircle className="h-5 w-5 shrink-0 text-cyan-300" />
             <span className="inline-flex min-h-7 items-center border-l border-cyan-400/40 pl-3">
               {typedText}
@@ -144,7 +144,7 @@ export default function Hero() {
             </span>
           </div>
 
-          <p className="mt-9 max-w-2xl text-base leading-8 text-zinc-400 sm:text-1xl">
+          <p className="mt-7 max-w-2xl text-base leading-8 text-zinc-400 sm:text-1xl">
             Software Engineering student passionate about building scalable systems, distributed architectures, and AI-driven solutions that emphasize reliability, performance, and exceptional developer experiences.
           </p>
 
