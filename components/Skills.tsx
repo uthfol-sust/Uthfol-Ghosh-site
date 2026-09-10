@@ -1,8 +1,31 @@
 "use client";
 
 import { motion } from "framer-motion";
-import { ShieldCheck, Sparkles } from "lucide-react";
+import { ShieldCheck } from "lucide-react";
 import { skillGroups } from "@/data/portfolio";
+
+const skillIconColors: Record<string, string> = {
+  Go: "text-sky-400",
+  "C++": "text-blue-400",
+  Python: "text-yellow-300",
+  Java: "text-orange-400",
+  JavaScript: "text-yellow-300",
+  React: "text-cyan-300",
+  "Next.js": "text-white",
+  "Tailwind CSS": "text-sky-300",
+  "Framer Motion": "text-pink-400",
+  Gin: "text-cyan-300",
+  "Node.js": "text-green-400",
+  PostgreSQL: "text-blue-300",
+  MySQL: "text-sky-300",
+  MongoDB: "text-emerald-400",
+  Redis: "text-red-400",
+  Docker: "text-blue-400",
+  Git: "text-orange-500",
+  GitHub: "text-zinc-100",
+  Linux: "text-yellow-200",
+  TensorFlow: "text-orange-400",
+};
 
 export default function Skills() {
   return (
@@ -10,11 +33,10 @@ export default function Skills() {
       <div className="mx-auto max-w-7xl pt-0">
         <SectionTitle
           eyebrow="Skills"
-          title="Engineering depth across backend systems, frontend polish, and applied AI."
-          description="A carefully selected stack that reflects what I actually use to build production-ready applications, services, and experiments."
+          title="My Technical Stack"  
         />
 
-        <div className="mt-12 grid gap-5 md:grid-cols-2 xl:grid-cols-3">
+        <div className="mt-12 grid gap-6 lg:grid-cols-2">
           {skillGroups.map((group, index) => (
             <motion.article
               key={group.category}
@@ -22,36 +44,30 @@ export default function Skills() {
               whileInView={{ opacity: 1, y: 0 }}
               viewport={{ once: true, amount: 0.2 }}
               transition={{ duration: 0.45, delay: index * 0.04 }}
-              className="rounded-4xl border border-white/10 bg-white/5 p-6 shadow-[0_22px_70px_rgba(0,0,0,0.24)] backdrop-blur-2xl"
+              className="min-h-64 rounded-4xl border border-white/10 shadow-[0_22px_70px_rgba(0,0,0,0.40)] backdrop-blur-2xl sm:p-5 "
             >
-              <div className="flex items-center gap-3 text-sm font-medium uppercase tracking-[0.28em] text-cyan-200/70">
-                <ShieldCheck className="h-4 w-4" />
+              <div className="flex items-center gap-3 text-base font-semibold uppercase tracking-[0.24em] text-cyan-200/80">
+                <ShieldCheck className="h-6 w-6" />
                 {group.category}
               </div>
 
-              <div className="mt-5 flex flex-wrap gap-3">
+              <div className="mt-7 grid grid-cols-2 gap-4 *:sm:grid-cols-4 sm:gap-6 lg:grid-cols-4">
                 {group.items.map((item) => (
-                  <span
-                    key={item}
-                    className="rounded-full border border-white/10 bg-slate-950/55 px-4 py-2 text-sm text-zinc-200 transition hover:border-cyan-400/30 hover:bg-cyan-400/10"
+                  <div
+                    key={item.name}
+                    className="group flex min-h-36 cursor-pointer flex-col items-center justify-center gap-4 rounded-4xl  py-5 text-center text-base font-semibold text-zinc-200 transition"
                   >
-                    {item}
-                  </span>
+                    <item.icon
+                      className={`h-20 w-25 shrink-0 transition-transform group-hover:scale-110 ${
+                        skillIconColors[item.name] ?? "text-cyan-300"
+                      }`}
+                    />
+                    <span className="min-w-0 leading-tight">{item.name}</span>
+                  </div>
                 ))}
               </div>
             </motion.article>
           ))}
-        </div>
-
-        <div className="mt-8 rounded-4xl border border-white/10 bg-gradient-to-r from-cyan-400/10 via-white/5 to-fuchsia-400/10 p-6 backdrop-blur-xl">
-          <div className="flex items-center gap-3 text-sm uppercase tracking-[0.28em] text-zinc-300">
-            <Sparkles className="h-4 w-4 text-cyan-300" />
-            What this stack enables
-          </div>
-          <p className="mt-4 max-w-3xl text-base leading-8 text-zinc-300">
-            Clean APIs, secure authentication, scalable data flows, elegant interfaces,
-            fast iteration, and infrastructure that stays manageable as products grow.
-          </p>
         </div>
       </div>
     </section>
@@ -60,12 +76,10 @@ export default function Skills() {
 
 function SectionTitle({
   eyebrow,
-  title,
-  description,
+  title
 }: {
   eyebrow: string;
   title: string;
-  description: string;
 }) {
   return (
     <div className="max-w-3xl">
@@ -76,10 +90,10 @@ function SectionTitle({
         </span>
         {eyebrow}
       </div>
-      {/* <h2 className="mt-5 text-3xl font-semibold tracking-[-0.04em] text-white sm:text-4xl lg:text-5xl">
+      <h2 className="mt-5 text-nowrap text-2xl font-semibold tracking-[-0.04em] text-white/75 sm:text-4xl lg:text-3xl">
         {title}
       </h2>
-      <p className="mt-4 text-base leading-8 text-zinc-300 sm:text-lg">{description}</p> */}
+      
     </div>
   );
 }

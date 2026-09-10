@@ -1,3 +1,27 @@
+import {
+  SiGo,
+  SiCplusplus,
+  SiPython,
+  SiJavascript,
+  SiReact,
+  SiNextdotjs,
+  SiTailwindcss,
+  SiFramer,
+  SiNodedotjs,
+  SiPostgresql,
+  SiMysql,
+  SiMongodb,
+  SiRedis,
+  SiDocker,
+  SiGit,
+  SiGithub,
+  SiLinux,
+  SiTensorflow,
+} from "react-icons/si";
+import { FaJava } from "react-icons/fa";
+
+
+
 export const portfolio = {
   name: "Uthfol Ghosh",
   role: "Software Engineer",
@@ -20,14 +44,21 @@ export const portfolio = {
 
 export const navLinks = [
   { name: "Home", href: "#home" },
-  { name: "About", href: "#about" },
-  { name: "Skills", href: "#skills" },
-  { name: "Experience", href: "#experience" },
+  {
+    name: "About",
+    href: "#about",
+    children: [{ name: "Skills", href: "#skills" }],
+  },
   { name: "Projects", href: "#projects" },
-  { name: "Research", href: "#research" },
-  { name: "Competitive Programming", href: "#competitive-programming" },
-  { name: "Achievements", href: "#achievements" },
-  { name: "Leadership", href: "#leadership" },
+  {
+    name: "Experience",
+    href: "#research",
+    children: [
+      { name: "Research", href: "#research" },
+      { name: "Competitive Programming", href: "#competitive-programming" },
+      { name: "Achievements", href: "#achievements" },
+    ],
+  },
   { name: "Contact", href: "#contact" },
 ];
 
@@ -49,34 +80,65 @@ export const education = {
   institution: "Shahjalal University of Science and Technology",
   degree: "Software Engineering",
   status: "Undergraduate",
-  cgpa: "3.57 / 4.00",
+  cgpa: "3.54 / 4.00",
   focus: ["Data structures", "Algorithms", "Systems design", "AI/ML foundations"],
 };
 
 export const skillGroups = [
   {
     category: "Languages",
-    items: ["Go", "C++", "Python", "Java", "JavaScript"],
+    items: [
+      { name: "Go", icon: SiGo },
+      { name: "C++", icon: SiCplusplus },
+      { name: "Python", icon: SiPython },
+      { name: "Java", icon: FaJava },
+      { name: "JavaScript", icon: SiJavascript },
+    ],
   },
+
   {
     category: "Frontend",
-    items: ["React", "Next.js", "Tailwind CSS", "Framer Motion", "Accessibility"],
+    items: [
+      { name: "React", icon: SiReact },
+      { name: "Next.js", icon: SiNextdotjs },
+      { name: "Tailwind CSS", icon: SiTailwindcss },
+      { name: "Framer Motion", icon: SiFramer },
+    ],
   },
+
   {
     category: "Backend",
-    items: ["Gin", "Node.js", "REST API", "JWT", "Caching"],
+    items: [
+      { name: "Gin", icon: SiGo },
+      { name: "Node.js", icon: SiNodedotjs },
+    ],
   },
+
   {
     category: "Database",
-    items: ["PostgreSQL", "MySQL", "MongoDB", "Redis"],
+    items: [
+      { name: "PostgreSQL", icon: SiPostgresql },
+      { name: "MySQL", icon: SiMysql },
+      { name: "MongoDB", icon: SiMongodb },
+      { name: "Redis", icon: SiRedis },
+    ],
   },
+
   {
     category: "DevOps",
-    items: ["Docker", "Git", "GitHub", "CI/CD", "Linux"],
+    items: [
+      { name: "Docker", icon: SiDocker },
+      { name: "Git", icon: SiGit },
+      { name: "GitHub", icon: SiGithub },
+      { name: "Linux", icon: SiLinux },
+    ],
   },
+
   {
     category: "AI & Research",
-    items: ["Machine Learning", "Deep Learning", "NLP", "TensorFlow", "RAG"],
+    items: [
+      { name: "TensorFlow", icon: SiTensorflow },
+    ],
   },
 ];
 
@@ -150,64 +212,96 @@ export const projects = [
   },
 ];
 
-export const researchTopics = [
-  {
-    title: "Language Models",
-    items: ["LLMs", "Low Resource NLP", "Bangla NLP", "Hallucination Detection", "Machine Translation", "RAG"],
-  },
-  {
-    title: "Infrastructure",
-    items: ["Vector Databases", "AI Agents", "Kafka", "RabbitMQ", "Redis Internals", "Distributed Systems"],
-  },
-  {
-    title: "Platform Engineering",
-    items: ["System Design", "Kubernetes", "Docker", "gRPC", "Microservices"],
-  },
-];
+export const researchTopics = {
+  currentResearch: [
+    {
+      title: "Bangla Chart-to-Text Generation",
+      status: "Ongoing Research",
+      description:
+        "Developing a Bangla chart-to-text dataset and exploring vision-language models for generating meaningful Bangla descriptions from charts.",
+      areas: [
+        "Bangla NLP",
+        "Vision-Language Models",
+        "Chart-to-Text",
+        "Knowledge Distillation",
+      ],
 
-export const competitiveProgrammingStats = [
-  { label: "Problems Solved", value: "800+" },
-  { label: "Contests", value: "60+" },
-  { label: "Primary Languages", value: "C++, Go" },
-  { label: "Online Judges", value: "Codeforces, CodeChef, LeetCode" },
-];
+      publicationStatus: "Ongoing",
+      paperUrl: "",
+      githubUrl: "",
+      datasetUrl: "",
+    },
+
+
+    {
+      title: "PoWoBD: A Bangla Dataset and Ensemble Transformer Framework for Political Barriers Classification Against Women in Bangladesh",
+      status: "Submitted Research",
+      description:
+        "Analyzing barriers and perceptions surrounding women's participation in political leadership in Bangladesh using social media and survey-based datasets and analysis.",
+      areas: [
+        "Social Media Comments Analysis",
+        "NLP",
+        "Dataset Development",
+        "Bangla Text Analysis",
+      ],
+
+      publicationStatus: "waiting for review",
+      paperUrl: "#contact",
+      githubUrl: "#contact",
+      datasetUrl: "#contact",
+    },
+  ],
+
+  researchInterests: [
+    "Large Language Models",
+    "Vision-Language Models",
+    "Natural Language Processing",
+    "Multimodal AI",
+    "Bangla NLP",
+    "Knowledge Distillation",
+    "Deep Learning",
+    "Machine Learning",
+    "Retrieval-Augmented Generation",
+  ],
+};
 
 export const achievements = [
   {
-    title: "NASA Space Apps Challenge Bangladesh 2024",
-    result: "Second Runner-up",
-    category: "Achievement",
+    type: "achievement",
+    category: "Special Achievement",
+    title: "2nd Runner-up",
+    organization: "NASA International Space Apps Challenge Bangladesh 2024",
+    link: "https://drive.google.com/file/d/1qLP7VC4avqZ4gcEaEKUEbvzntfyQTpvp/view?usp=drive_link",
   },
   {
-    title: "Competitive Programming",
-    result: "800+ solved problems",
-    category: "Discipline",
+    type: "achievement",
+    category: "Special Achievement",
+    title: "Champion",
+    organization: "Cricket Tournament, IICT Sports Week 2024",
   },
   {
-    title: "Leadership",
-    result: "Executive committee and volunteering work",
-    category: "Community",
-  },
-];
-
-export const leadershipItems = [
-  {
-    title: "Executive Committee",
-    organization: "SWE Society",
-    description:
-      "Contributing to student engineering culture, technical coordination, and community growth.",
+    type: "leadership",
+    category: "Volunteerism",
+    title: "Executive Member",
+    organization: "SWE Society, SUST",
   },
   {
+    type: "leadership",
+    category: "Leadership",
     title: "Information & Technology Secretary",
-    organization: "SWE Society",
-    description:
-      "Supporting communication, digital systems, and event operations with a technology-first mindset.",
+    organization: "Mymensingh Student Association, SUST",
   },
   {
-    title: "Volunteer",
-    organization: "WordCamp Sylhet",
-    description:
-      "Helping deliver community-first technical events and collaborating with organizers and attendees.",
+    type: "volunteer",
+    category: "Volunteerism",
+    title: "Volunteer — Food Management Team",
+    organization: "WordPress Camp Sylhet 2023",
+  },
+  {
+    type: "volunteer",
+    category: "Volunteerism",
+    title: "Volunteer — Registration Management Team",
+    organization: "WordPress Camp Sylhet 2024",
   },
 ];
 

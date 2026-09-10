@@ -40,7 +40,7 @@ export default function Contact() {
   };
 
   return (
-    <section id="contact" className="px-6 py-20 sm:px-8 lg:px-10 lg:py-28">
+    <section id="contact" className="px-6 py-10 sm:px-8 lg:px-10 lg:py-14">
       <div className="mx-auto max-w-7xl">
         <SectionTitle
           eyebrow="Contact"

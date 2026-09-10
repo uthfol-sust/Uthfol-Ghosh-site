@@ -12,6 +12,8 @@
   --page-glow: rgba(34, 211, 238, 0.16);
   --page-grid: rgba(255, 255, 255, 0.05);
   --page-noise: rgba(255, 255, 255, 0.04);
+  --font-sans: ui-sans-serif, system-ui, sans-serif;
+  --font-mono: ui-monospace, SFMono-Regular, Consolas, "Liberation Mono", monospace;
 }
 
 html.light {

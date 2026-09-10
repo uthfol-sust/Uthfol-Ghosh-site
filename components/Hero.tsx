@@ -4,6 +4,7 @@ import Image from "next/image";
 import Link from "next/link";
 import { useEffect, useRef, useState } from "react";
 import { motion, AnimatePresence } from "framer-motion";
+import type { Variants } from "framer-motion";
 import {
   ArrowDownToLine,
   ArrowRight,
@@ -33,7 +34,7 @@ const profileImages = [
   { src: "/dp4.jpeg", alt: "Uthfol Ghosh profile photo" },
 ];
 
-const foldVariants = {
+const foldVariants: Variants = {
   enter: {
     opacity: 0,
     rotateY: 130,

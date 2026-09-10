@@ -4,7 +4,6 @@ import { useEffect, useRef, useState } from "react";
 import { motion, AnimatePresence } from "framer-motion";
 import {
   Sparkles,
-  Quote,
   Code2,
   Cpu,
   Target,
@@ -20,17 +19,7 @@ import {
   Brain,
   Trophy,
 } from "lucide-react";
-import { aboutHighlights, education, portfolio } from "@/data/portfolio";
-
-const stats = [
-  { value: "800+", label: "Problems Solved" },
-  { value: "10+", label: "Projects Shipped" },
-  { value: "4+", label: "ML / NLP Research" },
-];
-
-const techStack = [
-  "Go", "C++", "Python", "Next.js", "React", "PostgreSQL", "Redis", "Docker", "Kubernetes",
-];
+import { education, portfolio } from "@/data/portfolio";
 
 const highlights = [
   { icon: Cpu, label: "Backend Focus", desc: "Clean architecture, reliable APIs" },
@@ -69,9 +58,6 @@ type TabId = (typeof tabs)[number]["id"];
 
 export default function About() {
   const [activeTab, setActiveTab] = useState<TabId>("education");
-
-  const contentRef = useRef<HTMLDivElement>(null);
-  const [trackHeight, setTrackHeight] = useState(0);
   const [focusIndex, setFocusIndex] = useState(0);
 
   useEffect(() => {
@@ -80,19 +66,6 @@ export default function About() {
       }, 4500);
       return () => window.clearInterval(id);
     }, []);
-
-  useEffect(() => {
-    const el = contentRef.current;
-    if (!el) return;
-
-    const observer = new ResizeObserver((entries) => {
-      for (const entry of entries) {
-        setTrackHeight(entry.contentRect.height);
-      }
-    });
-    observer.observe(el);
-    return () => observer.disconnect();
-  }, []);
 
   return (
     <section id="about" className="relative overflow-hidden px-6 pb-8 pt-0 sm:px-8 lg:px-10 lg:pb-10 lg:-mt-4">
@@ -144,7 +117,7 @@ export default function About() {
 
               <div className="relative px-6 py-5 pl-6">
 
-                <div ref={contentRef}>
+                <div>
                   <AnimatePresence mode="wait">
                     {activeTab === "education" && (
                       <motion.div
@@ -300,24 +273,6 @@ export default function About() {
 
           </motion.div>
         </div>
-         {/* core stack */}
-          <div className="mt-6">
-            <p className="font-mono text-[12px] uppercase tracking-[0.15em] text-zinc-500">
-              Core Stack
-            </p>
-            <div className="mt-1 h-0.5 w-22 bg-white/10" />
-
-            <div className="mt-2.5 flex flex-wrap gap-2">
-              {techStack.map((tech) => (
-                <span
-                  key={tech}
-                  className="rounded-md border border-white/[0.06] bg-white/[0.03] px-2.5 py-1 text-[11px] text-zinc-400"
-                >
-                  {tech}
-                </span>
-              ))}
-            </div>
-          </div>
       </div>
     </section>
   );
@@ -359,7 +314,7 @@ function SectionTitle({
         {eyebrow}
       </div>
 
-      <h2 className="mt-5 text-nowrap text-2xl font-semibold tracking-[-0.04em] text-white sm:text-4xl lg:text-3xl">
+      <h2 className="mt-5 text-nowrap text-2xl font-semibold tracking-[-0.04em] text-white/75 sm:text-4xl lg:text-3xl">
         {title}
       </h2>
 

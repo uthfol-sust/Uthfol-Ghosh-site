@@ -7,7 +7,7 @@ import {
 
 import { FaGithub, FaLinkedin } from "react-icons/fa6"
 
-import { footerTechStack, portfolio } from "@/data/portfolio";
+import { portfolio } from "@/data/portfolio";
 
 const quickLinks = [
   {
@@ -114,48 +114,14 @@ export default function Footer() {
               ))}
 
             </div>
-
-          </div>
-
-          {/* Tech */}
-
-          <div>
-
-            <h3 className="text-lg font-semibold">
-              Built With
-            </h3>
-
-            <div className="mt-6 flex flex-wrap gap-3">
-
-              {footerTechStack.map((tech) => (
-
-                <span
-                  key={tech}
-                  className="rounded-full border border-white/10 bg-white/5 px-4 py-2 text-sm text-zinc-300 transition hover:border-blue-500 hover:text-white"
-                >
-                  {tech}
-                </span>
-
-              ))}
-
-            </div>
-
-          </div>
-
-        </div>
-
-        <div className="mt-5 flex flex-col items-center justify-between border-t border-white/10 text-sm text-zinc-500 md:flex-row">
-
-          <p>
+            <div className="mt-6 space-y-4">
+              <p className="mt-10 md:mt-0 items-center text-sm text-zinc-500">
             © {new Date().getFullYear()} {portfolio.name}. All rights reserved.
           </p>
-
-          <p>
-            Designed & Developed with Next.js, TypeScript & Go.
-          </p>
-
+            </div>
+          </div>
+              
         </div>
-
       </div>
     </footer>
   );

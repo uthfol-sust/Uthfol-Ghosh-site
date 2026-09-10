@@ -1,18 +1,27 @@
 "use client";
 
 import { useEffect, useRef, useState } from "react";
-import { Download, Menu, X } from "lucide-react";
+import { ChevronDown, Download, Menu, X } from "lucide-react";
 import { motion, AnimatePresence, useScroll, useSpring } from "framer-motion";
 import { navLinks } from "@/data/portfolio";
 
-const compactLinks = navLinks.filter(({ name }) =>
-  ["Home", "About", "Skills", "Projects", "Research", "Contact"].includes(name),
-);
+const compactLinks = navLinks;
+
+// id -> nav label, built directly from navLinks so it can never drift
+// out of sync with the actual nav structure.
+// e.g. "skills" -> "About", "competitive-programming" -> "Experience"
+const sectionNameById = navLinks.reduce((map, link) => {
+  map[link.href.replace("#", "")] = link.name;
+  link.children?.forEach((child) => {
+    map[child.href.replace("#", "")] = link.name;
+  });
+  return map;
+}, {} as Record<string, string>);
 
 export default function Navbar() {
-  const mountedRef = useRef(false);
   const [mobileOpen, setMobileOpen] = useState(false);
   const [active, setActive] = useState("Home");
+  const visibleRatios = useRef<Record<string, number>>({});
 
   const { scrollYProgress } = useScroll();
   const scrollProgress = useSpring(scrollYProgress, {
@@ -22,62 +31,40 @@ export default function Navbar() {
   });
 
   useEffect(() => {
-    mountedRef.current = true;
+    const ids = Object.keys(sectionNameById);
+    const elements = ids
+      .map((id) => document.getElementById(id))
+      .filter((el) => el !== null);
 
-    const sections = compactLinks
-      .map((link) => {
-        const id = link.href.replace("#", "");
-        const element = document.getElementById(id);
+    if (elements.length === 0) return;
 
-        return element ? { ...link, id, element } : null;
-      })
-      .filter((section): section is { id: string; name: string; href: string; element: HTMLElement } => Boolean(section));
+    const observer = new IntersectionObserver(
+      (entries) => {
+        entries.forEach((entry) => {
+          visibleRatios.current[entry.target.id] = entry.isIntersecting
+            ? entry.intersectionRatio
+            : 0;
+        });
 
-    let animationFrame = 0;
+        // whichever tracked section currently has the most area inside
+        // the "active band" (top strip of the viewport) wins
+        const topId = Object.entries(visibleRatios.current)
+          .filter(([, ratio]) => ratio > 0)
+          .sort((a, b) => b[1] - a[1])[0]?.[0];
 
-    const syncActiveFromScroll = () => {
-      const markerPosition = window.scrollY + window.innerHeight * 0.38;
-      const currentSection = sections.reduce((current, section) => {
-        return section.element.offsetTop <= markerPosition ? section : current;
-      }, sections[0]);
-
-      if (currentSection) {
-        setActive((current) => (current === currentSection.name ? current : currentSection.name));
+        if (topId && sectionNameById[topId]) {
+          setActive(sectionNameById[topId]);
+        }
+      },
+      {
+        // thin horizontal band near the top of the viewport counts as "active"
+        rootMargin: "-15% 0px -70% 0px",
+        threshold: [0, 0.25, 0.5, 0.75, 1],
       }
-    };
+    );
 
-    const handleScroll = () => {
-      if (!mountedRef.current) {
-        return;
-      }
-
-      window.cancelAnimationFrame(animationFrame);
-      animationFrame = window.requestAnimationFrame(syncActiveFromScroll);
-    };
-
-    const syncActiveFromHash = () => {
-      const currentHash = window.location.hash.replace("#", "");
-      const matched = sections.find((section) => section.id === currentHash);
-      if (matched) {
-        setActive((current) => (current === matched.name ? current : matched.name));
-        return;
-      }
-
-      handleScroll();
-    };
-
-    handleScroll();
-    window.addEventListener("scroll", handleScroll, { passive: true });
-    window.addEventListener("resize", handleScroll);
-    window.addEventListener("hashchange", syncActiveFromHash);
-
-    return () => {
-      mountedRef.current = false;
-      window.cancelAnimationFrame(animationFrame);
-      window.removeEventListener("scroll", handleScroll);
-      window.removeEventListener("resize", handleScroll);
-      window.removeEventListener("hashchange", syncActiveFromHash);
-    };
+    elements.forEach((el) => observer.observe(el));
+    return () => observer.disconnect();
   }, []);
 
   return (
@@ -94,17 +81,34 @@ export default function Navbar() {
             const isActive = active === item.name;
 
             return (
-              <a
-                key={item.name}
-                href={item.href}
-                onClick={() => setActive(item.name)}
-                className={`rounded-full px-4 py-2 text-sm transition ${isActive ? "bg-white/10 text-white" : "text-zinc-300 hover:bg-white/5 hover:text-white"}`}
-              >
-                <span className="inline-flex items-center gap-2">
-                  {isActive ? <span className="h-1.5 w-1.5 rounded-full bg-cyan-300" /> : null}
-                  {item.name}
-                </span>
-              </a>
+              <div key={item.name} className="group relative">
+                <a
+                  href={item.href}
+                  onClick={() => setActive(item.name)}
+                  className={`rounded-full px-4 py-2 text-sm transition ${isActive ? "bg-white/10 text-white" : "text-zinc-300 hover:bg-white/5 hover:text-white"}`}
+                >
+                  <span className="inline-flex items-center gap-2">
+                    {isActive ? <span className="h-1.5 w-1.5 rounded-full bg-cyan-300" /> : null}
+                    {item.name}
+                    {item.children ? <ChevronDown className="h-3.5 w-3.5" /> : null}
+                  </span>
+                </a>
+
+                {item.children ? (
+                  <div className="invisible absolute left-1/2 top-full z-10 mt-2 min-w-56 -translate-x-1/2 rounded-2xl border border-white/10 bg-slate-950/95 p-2 opacity-0 shadow-[0_20px_50px_rgba(0,0,0,0.35)] transition duration-200 group-hover:visible group-hover:opacity-100">
+                    {item.children.map((child) => (
+                      <a
+                        key={child.name}
+                        href={child.href}
+                        onClick={() => setActive(item.name)}
+                        className="block rounded-xl px-3 py-2.5 text-sm text-zinc-300 transition hover:bg-white/10 hover:text-white"
+                      >
+                        {child.name}
+                      </a>
+                    ))}
+                  </div>
+                ) : null}
+              </div>
             );
           })}
         </nav>
@@ -131,7 +135,7 @@ export default function Navbar() {
       {/* Scroll progress line */}
       <motion.div
         style={{ scaleX: scrollProgress }}
-        className="absolute inset-x-0 bottom-0 h-[3px] origin-left bg-gradient-to-r from-cyan-400 via-sky-300 to-fuchsia-400"
+        className="absolute inset-x-0 bottom-0 h-0.75 origin-left bg-linear-to-r from-cyan-400 via-sky-300 to-fuchsia-400"
       />
 
       <AnimatePresence>
@@ -145,17 +149,36 @@ export default function Navbar() {
           >
             <div className="mx-auto flex max-w-7xl flex-col gap-2">
               {compactLinks.map((item) => (
-                <a
-                  key={item.name}
-                  href={item.href}
-                  onClick={() => {
-                    setActive(item.name);
-                    setMobileOpen(false);
-                  }}
-                  className="rounded-2xl border border-white/10 bg-white/5 px-4 py-3 text-sm text-zinc-200 transition hover:border-cyan-400/30 hover:bg-cyan-400/10 hover:text-white"
-                >
-                  {item.name}
-                </a>
+                <div key={item.name}>
+                  <a
+                    href={item.href}
+                    onClick={() => {
+                      setActive(item.name);
+                      setMobileOpen(false);
+                    }}
+                    className="flex items-center justify-between rounded-2xl border border-white/10 bg-white/5 px-4 py-3 text-sm text-zinc-200 transition hover:border-cyan-400/30 hover:bg-cyan-400/10 hover:text-white"
+                  >
+                    {item.name}
+                    {item.children ? <ChevronDown className="h-4 w-4" /> : null}
+                  </a>
+                  {item.children ? (
+                    <div className="ml-4 mt-1 space-y-1 border-l border-white/10 pl-3">
+                      {item.children.map((child) => (
+                        <a
+                          key={child.name}
+                          href={child.href}
+                          onClick={() => {
+                            setActive(item.name);
+                            setMobileOpen(false);
+                          }}
+                          className="block rounded-xl px-3 py-2 text-sm text-zinc-400 transition hover:bg-white/10 hover:text-white"
+                        >
+                          {child.name}
+                        </a>
+                      ))}
+                    </div>
+                  ) : null}
+                </div>
               ))}
               <a
                 href="/resume.pdf"
