@@ -31,7 +31,6 @@ const socialLinks = [
 const profileImages = [
   { src: "/profile.jpeg", alt: "Portrait of Uthfol Ghosh" },
   { src: "/dp3.jpeg", alt: "Uthfol Ghosh profile photo" },
-  { src: "/dp4.jpeg", alt: "Uthfol Ghosh profile photo" },
 ];
 
 const foldVariants: Variants = {
